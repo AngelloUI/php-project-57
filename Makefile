@@ -9,6 +9,9 @@ setup:
 	php artisan key:generate --ansi
 	npm install
 
+migrate:
+	php artisan migrate --force
+
 test:
 	php artisan test
 
