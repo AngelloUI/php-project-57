@@ -2,8 +2,13 @@ FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-    libzip-dev
-RUN docker-php-ext-install pdo pdo_pgsql zip
+    libzip-dev \
+    libsqlite3-dev \
+    sqlite3 \
+    pkg-config \
+    curl \
+    gnupg
+RUN docker-php-ext-install pdo pdo_pgsql pdo_sqlite sqlite3 zip
 # RUN docker-php-ext-configure pdo pdo_pgsql
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
