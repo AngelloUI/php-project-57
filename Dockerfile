@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     curl \
     gnupg
-RUN docker-php-ext-install pdo pdo_pgsql pdo_sqlite sqlite3 zip
-# RUN docker-php-ext-configure pdo pdo_pgsql
+RUN docker-php-ext-install pdo_pgsql pdo_sqlite zip
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
