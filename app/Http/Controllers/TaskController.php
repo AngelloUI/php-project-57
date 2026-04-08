@@ -11,17 +11,28 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
     public function index(): View
     {
-        $tasks = Task::query()
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters(
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('assigned_to_id'),
+                AllowedFilter::scope('label_id'),
+            )
             ->with(['status', 'creator', 'assignee', 'labels'])
             ->orderBy('id')
             ->get();
 
-        return view('tasks.index', compact('tasks'));
+        $statuses = TaskStatus::query()->orderBy('name')->get();
+        $users = User::query()->orderBy('name')->get();
+        $labels = Label::query()->orderBy('name')->get();
+
+        return view('tasks.index', compact('tasks', 'statuses', 'users', 'labels'));
     }
 
     public function show(Task $task): View

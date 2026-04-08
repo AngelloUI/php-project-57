@@ -28,5 +28,8 @@ return [
         'updated' => 'Task successfully updated',
         'deleted' => 'Task successfully deleted',
     ],
+    'filter' => [
+        'submit' => 'Show',
+    ],
 ];
 
