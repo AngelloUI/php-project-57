@@ -55,4 +55,3 @@ class LabelController extends Controller
         return Redirect::route('labels.index')->with('status', __('labels.flash.deleted'));
     }
 }
-

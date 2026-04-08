@@ -138,4 +138,3 @@ class TaskTest extends TestCase
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
     }
 }
-

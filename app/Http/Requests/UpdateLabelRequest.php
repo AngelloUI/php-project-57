@@ -25,4 +25,3 @@ class UpdateLabelRequest extends FormRequest
         ];
     }
 }
-

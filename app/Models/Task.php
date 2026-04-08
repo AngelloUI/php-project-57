@@ -51,4 +51,3 @@ class Task extends Model
         return $query->whereHas('labels', fn($q) => $q->where('labels.id', $labelId));
     }
 }
-

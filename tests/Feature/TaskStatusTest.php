@@ -119,4 +119,3 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->id]);
     }
 }
-

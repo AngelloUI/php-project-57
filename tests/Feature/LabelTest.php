@@ -151,4 +151,3 @@ class LabelTest extends TestCase
             ->assertSeeText('my-label');
     }
 }
-

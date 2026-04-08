@@ -99,4 +99,3 @@ class TaskController extends Controller
             ->with('status', __('tasks.flash.deleted'));
     }
 }
-

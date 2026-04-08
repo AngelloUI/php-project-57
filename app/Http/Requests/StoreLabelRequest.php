@@ -20,4 +20,3 @@ class StoreLabelRequest extends FormRequest
         ];
     }
 }
-
