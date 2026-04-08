@@ -14,6 +14,7 @@ return [
         'status' => 'Статус',
         'created_by' => 'Автор',
         'assigned_to' => 'Исполнитель',
+        'labels' => 'Метки',
     ],
     'actions' => [
         'actions' => 'Действия',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -16,7 +17,7 @@ class TaskController extends Controller
     public function index(): View
     {
         $tasks = Task::query()
-            ->with(['status', 'creator', 'assignee'])
+            ->with(['status', 'creator', 'assignee', 'labels'])
             ->orderBy('id')
             ->get();
 
@@ -25,7 +26,7 @@ class TaskController extends Controller
 
     public function show(Task $task): View
     {
-        $task->load(['status', 'creator', 'assignee']);
+        $task->load(['status', 'creator', 'assignee', 'labels']);
 
         return view('tasks.show', compact('task'));
     }
@@ -35,16 +36,20 @@ class TaskController extends Controller
         $task = new Task();
         $statuses = TaskStatus::query()->orderBy('name')->get();
         $users = User::query()->orderBy('name')->get();
+        $labels = Label::query()->orderBy('name')->get();
 
-        return view('tasks.create', compact('task', 'statuses', 'users'));
+        return view('tasks.create', compact('task', 'statuses', 'users', 'labels'));
     }
 
     public function store(StoreTaskRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $labelIds = $data['labels'] ?? [];
+        unset($data['labels']);
         $data['created_by_id'] = (int) $request->user()->id;
 
-        Task::query()->create($data);
+        $task = Task::query()->create($data);
+        $task->labels()->sync($labelIds);
 
         return Redirect::route('tasks.index')
             ->with('status', __('tasks.flash.created'));
@@ -54,13 +59,20 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::query()->orderBy('name')->get();
         $users = User::query()->orderBy('name')->get();
+        $labels = Label::query()->orderBy('name')->get();
+        $task->load('labels');
 
-        return view('tasks.edit', compact('task', 'statuses', 'users'));
+        return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
 
     public function update(UpdateTaskRequest $request, Task $task): RedirectResponse
     {
-        $task->update($request->validated());
+        $data = $request->validated();
+        $labelIds = $data['labels'] ?? [];
+        unset($data['labels']);
+
+        $task->update($data);
+        $task->labels()->sync($labelIds);
 
         return Redirect::route('tasks.index')
             ->with('status', __('tasks.flash.updated'));

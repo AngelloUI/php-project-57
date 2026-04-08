@@ -13,7 +13,11 @@
                     <p class="mb-3">{{ $task->description }}</p>
                     <p class="mb-2"><strong>{{ __('tasks.form.status') }}:</strong> {{ $task->status->name }}</p>
                     <p class="mb-2"><strong>{{ __('tasks.form.created_by') }}:</strong> {{ $task->creator->name }}</p>
-                    <p class="mb-4"><strong>{{ __('tasks.form.assigned_to') }}:</strong> {{ $task->assignee?->name ?? '' }}</p>
+                    <p class="mb-2"><strong>{{ __('tasks.form.assigned_to') }}:</strong> {{ $task->assignee?->name ?? '' }}</p>
+                    <p class="mb-4">
+                        <strong>{{ __('tasks.form.labels') }}:</strong>
+                        {{ $task->labels->pluck('name')->join(', ') }}
+                    </p>
 
                     <a href="{{ route('tasks.edit', $task) }}" class="underline me-3">{{ __('tasks.actions.edit') }}</a>
 

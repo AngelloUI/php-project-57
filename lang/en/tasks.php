@@ -14,6 +14,7 @@ return [
         'status' => 'Status',
         'created_by' => 'Author',
         'assigned_to' => 'Executor',
+        'labels' => 'Labels',
     ],
     'actions' => [
         'actions' => 'Actions',

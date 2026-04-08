@@ -33,6 +33,17 @@
 </div>
 
 <div class="mt-4">
+    <x-input-label for="labels" :value="__('tasks.form.labels')" />
+    <select id="labels" name="labels[]" multiple class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+        @php $selectedLabels = old('labels', $task->labels?->pluck('id')->toArray() ?? []); @endphp
+        @foreach ($labels as $label)
+            <option value="{{ $label->id }}" @selected(in_array($label->id, array_map('intval', $selectedLabels)))>{{ $label->name }}</option>
+        @endforeach
+    </select>
+    <x-input-error :messages="$errors->get('labels')" class="mt-2" />
+</div>
+
+<div class="mt-4">
     <x-primary-button>{{ __('tasks.actions.save') }}</x-primary-button>
 </div>
 
