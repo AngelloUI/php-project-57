@@ -15,9 +15,9 @@
                         </div>
                     @endif
 
-                    @if ($errors->any())
+                    @if (session('error'))
                         <div class="mb-4 text-sm text-red-600 dark:text-red-400">
-                            {{ $errors->first() }}
+                            {{ session('error') }}
                         </div>
                     @endif
 

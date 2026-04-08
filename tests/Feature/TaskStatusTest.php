@@ -108,13 +108,14 @@ class TaskStatusTest extends TestCase
 
         Task::query()->create([
             'name' => 'Task 1',
-            'task_status_id' => $taskStatus->id,
+            'status_id' => $taskStatus->id,
+            'created_by_id' => $user->id,
         ]);
 
         $response = $this->actingAs($user)->delete(route('task_statuses.destroy', $taskStatus));
 
         $response->assertRedirect(route('task_statuses.index'));
-        $response->assertSessionHasErrors();
+        $response->assertSessionHas('error');
         $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->id]);
     }
 }

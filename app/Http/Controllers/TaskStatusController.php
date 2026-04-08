@@ -51,7 +51,7 @@ class TaskStatusController extends Controller
     {
         if ($taskStatus->tasks()->exists()) {
             return Redirect::route('task_statuses.index')
-                ->withErrors(['task_status' => __('task_statuses.flash.delete_forbidden')]);
+                ->with('error', __('task_statuses.flash.delete_forbidden'));
         }
 
         $taskStatus->delete();
